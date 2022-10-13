@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:MoviesApp.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:MovieDetailModule/MovieDetailModule.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:MovieListModule/MovieListModule.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:MoviesAPI/MoviesAPI.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Common/Common.xcodeproj">
+   </FileRef>
+</Workspace>
