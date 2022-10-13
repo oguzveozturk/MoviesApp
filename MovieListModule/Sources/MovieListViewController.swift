@@ -19,25 +19,25 @@ public final class MovieListViewController: UITableViewController, MovieListView
         presenter.load()
     }
     
-    func handleOutput(_ output: MovieListPresenterOutput) {
-        switch output {
-        case .setTitle(let title):
-            self.title = title
-        case .loading(let isLoading):
-            print(isLoading)
-        case .showList(let movies):
-            self.movies = movies
-            self.tableView.reloadData()
-        }
+    func setTitle(_ text: String) {
+        self.title = text
+    }
+    
+    func setLoading(_ isLoading: Bool) {
+        print(isLoading)
+    }
+    
+    func reloadData() {
+        self.tableView.reloadData()
     }
     
     public override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        movies.count
+        presenter.movies.count
     }
     
     public override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        let movie = movies[indexPath.row]
+        let movie = presenter.movie(indexPath.row)
         var content = cell.defaultContentConfiguration()
         content.text = movie.title
         content.secondaryText = movie.detail

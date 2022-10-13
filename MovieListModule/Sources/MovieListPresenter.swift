@@ -10,7 +10,7 @@ import Common
 
 final class MovieListPresenter:MovieListPresenterProtocol {
     
-    private var movies = [MoviePresentation]()
+    var movies = [MoviePresentation]()
     
     private let interactor:MovieListInteractorProtocol!
     private let view:MovieListViewProtocol!
@@ -26,12 +26,16 @@ final class MovieListPresenter:MovieListPresenterProtocol {
     }
     
     func load() {
-        view.handleOutput(.setTitle("Movies"))
-        interactor.load()
+        view.setTitle("Movies")
+        interactor.fetchMovies()
     }
     
     func selectMovie(at index: Int) {
-        interactor.selectMovie(at: index)
+        router.navigate(to: .detail(movies[index]))
+    }
+    
+    func movie(_ at:Int) -> MoviePresentation {
+        movies[at]
     }
 }
 
@@ -39,11 +43,10 @@ extension MovieListPresenter: MovieListInteractorDelegate {
     func handleOutput(_ output: MovieListInteractorOutput) {
         switch output {
         case .loading(let bool):
-            view.handleOutput(.loading(bool))
+            view.setLoading(bool)
         case .showList(let movies):
-            view.handleOutput(.showList(movies.map(MoviePresentation.init)))
-        case .showDetail(let movie):
-            router.navigate(to: .detail(MoviePresentation(movie: movie)))
+            self.movies = movies.map(MoviePresentation.init)
+            view.reloadData()
         }
     }
 }

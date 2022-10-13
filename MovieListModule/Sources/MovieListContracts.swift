@@ -11,8 +11,7 @@ import Common
 
 protocol MovieListInteractorProtocol:AnyObject {
     var delegate: MovieListInteractorDelegate? { get set }
-    func load()
-    func selectMovie(at index:Int)
+    func fetchMovies()
 }
 
 protocol MovieListInteractorDelegate: AnyObject {
@@ -22,11 +21,12 @@ protocol MovieListInteractorDelegate: AnyObject {
 enum MovieListInteractorOutput {
     case loading(Bool)
     case showList([Movie])
-    case showDetail(Movie)
 }
 
 protocol MovieListPresenterProtocol:AnyObject {
+    var movies:[MoviePresentation] { get set }
     func load()
+    func movie(_ at:Int) -> MoviePresentation
     func selectMovie(at index:Int)
 }
 
@@ -37,7 +37,9 @@ enum MovieListPresenterOutput {
 }
 
 protocol MovieListViewProtocol: AnyObject {
-    func handleOutput(_ output: MovieListPresenterOutput)
+    func setTitle(_ text: String)
+    func setLoading(_ isLoading:Bool)
+    func reloadData()
 }
 
 enum MovieListRoute: Equatable {

@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 public struct Movie: Decodable, Equatable {
     
     public enum CodingKeys: String, CodingKey {

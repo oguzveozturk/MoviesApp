@@ -11,29 +11,23 @@ import MoviesAPI
 final class MovieListInteractor: MovieListInteractorProtocol {
     weak var delegate: MovieListInteractorDelegate?
     
-    private var movies = [Movie]()
     private let service:TopMovieListProtocol!
     
     init(service:TopMovieListProtocol) {
         self.service = service
     }
     
-    func load() {
+    func fetchMovies() {
         delegate?.handleOutput(.loading(true))
         
         service.fetchMovies { [weak self] result in
             self?.delegate?.handleOutput(.loading(false))
             switch result {
             case .success(let movies):
-                self?.movies = movies
                 self?.delegate?.handleOutput(.showList(movies))
             case .failure(let error):
                 print(error)
             }
         }
-    }
-    
-    func selectMovie(at index: Int) {
-        delegate?.handleOutput(.showDetail(movies[index]))
     }
 }
